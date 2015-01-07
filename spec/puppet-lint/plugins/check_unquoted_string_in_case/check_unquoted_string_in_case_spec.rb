@@ -84,13 +84,13 @@ describe 'unquoted_string_in_case' do
             $rootgroup = 'wheel'
           }
           redhat,debian: {
-            $rootgroup = 'wheel'
+            include ::foo
           }
           redhat, debian: {
-            $rootgroup = 'wheel'
+            Foo { bar => 'baz' }
           }
           'redhat',debian: {
-            $rootgroup = 'wheel'
+            $rootgroup = wheel
           }
           redhat,'debian': {
             $rootgroup = 'wheel'
@@ -157,6 +157,9 @@ describe 'unquoted_string_in_case' do
         <<-EOS
         case $osfamily {
           'Solaris': {
+            $rootgroup = 'wheel'
+          }
+          'RedHat','Debian': {
             $rootgroup = 'wheel'
           }
           /(Darwin|FreeBSD)/: {
