@@ -40,27 +40,29 @@ PuppetLint.new_check(:unquoted_string_in_case) do
     tokens_to_fix
   end
 
-  def check
+  def act_on_tokens(&block)
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
       tokens_to_fix(case_tokens).each do |r|
-        notify :warning, {
-          :message => 'unquoted string in case',
-          :line    => r.line,
-          :column  => r.column,
-        }
+        block.call(r)
       end
+    end
+  end
+
+  def check
+    act_on_tokens do |r|
+      notify :warning, {
+        :message => 'unquoted string in case',
+        :line    => r.line,
+        :column  => r.column,
+      }
     end
   end 
 
   def fix(problem)
-    case_indexes.each do |kase|
-      case_tokens = tokens[kase[:start]..kase[:end]]
-
-      tokens_to_fix(case_tokens).each do |r|
-        r.type = :SSTRING
-      end
+    act_on_tokens do |r|
+      r.type = :SSTRING
     end
   end
 end
