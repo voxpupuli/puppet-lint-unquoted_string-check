@@ -37,7 +37,7 @@ describe 'unquoted_string_in_case' do
             include ::foo
           }
           /(Darwin|FreeBSD)/: {
-            include bar
+            foo { 'bar': }
           }
           default: {
             $rootgroup = 'root'
@@ -189,7 +189,7 @@ describe 'unquoted_string_in_case' do
             include ::foo
           }
           /(Darwin|FreeBSD)/: {
-            include bar
+            foo { 'bar': }
           }
           default: {
             $rootgroup = 'root'
@@ -253,7 +253,7 @@ describe 'unquoted_string_in_case' do
             $rootgroup = wheel
           }
           redhat,'debian': {
-            $rootgroup = 'wheel'
+            foo { 'bar': }
           }
           /(Darwin|FreeBSD)/: {
             $rootgroup = 'wheel'
@@ -296,7 +296,7 @@ describe 'unquoted_string_in_case' do
             $rootgroup = wheel
           }
           'redhat','debian': {
-            $rootgroup = 'wheel'
+            foo { 'bar': }
           }
           /(Darwin|FreeBSD)/: {
             $rootgroup = 'wheel'

@@ -27,7 +27,7 @@ def tokens_to_fix(type_tokens, sep_type)
   type_tokens.index do |r|
     if r.type == sep_type
       s = r.prev_token
-      while s.type != :NEWLINE
+      while s.type != :NEWLINE and s.type != :LBRACE
         if s.type == :NAME || s.type == :CLASSREF
           tokens_to_fix << s
         end
