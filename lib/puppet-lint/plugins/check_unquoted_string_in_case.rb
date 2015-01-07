@@ -26,12 +26,20 @@ PuppetLint.new_check(:unquoted_string_in_case) do
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
-      if case_tokens.index { |r| r.next_token.type == :COLON && (r.type == :NAME || r.type == :CLASSREF) }
-        notify :warning, {
-          :message => 'expected quoted string in case',
-          :line    => case_tokens.first.line,
-          :column  => case_tokens.first.column,
-        }
+      case_tokens.index do |r|
+        if r.type == :COLON
+          s = r.prev_token
+          while s.type != :NEWLINE
+            if s.type == :NAME || s.type == :CLASSREF
+              notify :warning, {
+                :message => 'unquoted string in case',
+                :line    => s.line,
+                :column  => s.column,
+              }
+            end
+            s = s.prev_token
+          end
+        end
       end
     end
   end 
@@ -93,7 +101,7 @@ PuppetLint.new_check(:unquoted_string_in_selector) do
 
       if qmark_tokens.index { |r| r.type == :NAME || r.type == :CLASSREF }
         notify :warning, {
-          :message => 'expected quoted string in selector',
+          :message => 'unquoted string in selector',
           :line    => qmark_tokens.first.line,
           :column  => qmark_tokens.first.column,
         }

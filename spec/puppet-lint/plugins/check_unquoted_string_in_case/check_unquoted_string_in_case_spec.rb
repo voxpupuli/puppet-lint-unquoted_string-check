@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'unquoted_string_in_case' do
-  let(:msg) { 'expected quoted string in case' }
+  let(:msg) { 'unquoted string in case' }
 
   context 'with fix disabled' do
     context 'quoted case' do
@@ -9,6 +9,9 @@ describe 'unquoted_string_in_case' do
         <<-EOS
         case $osfamily {
           'Solaris': {
+            $rootgroup = 'wheel'
+          }
+          'RedHat','Debian': {
             $rootgroup = 'wheel'
           }
           /(Darwin|FreeBSD)/: {
@@ -80,6 +83,18 @@ describe 'unquoted_string_in_case' do
           solaris: {
             $rootgroup = 'wheel'
           }
+          redhat,debian: {
+            $rootgroup = 'wheel'
+          }
+          redhat, debian: {
+            $rootgroup = 'wheel'
+          }
+          'redhat',debian: {
+            $rootgroup = 'wheel'
+          }
+          redhat,'debian': {
+            $rootgroup = 'wheel'
+          }
           /(Darwin|FreeBSD)/: {
             $rootgroup = 'wheel'
           }
@@ -91,7 +106,17 @@ describe 'unquoted_string_in_case' do
       end
 
       it 'should create a warning' do
-        expect(problems).to contain_warning(msg).on_line(1).in_column(9)
+        expect(problems).to have(7).problems
+      end
+
+      it 'should create a warning' do
+        expect(problems).to contain_warning(msg).on_line(2).in_column(11)
+        expect(problems).to contain_warning(msg).on_line(5).in_column(11)
+        expect(problems).to contain_warning(msg).on_line(5).in_column(18)
+        expect(problems).to contain_warning(msg).on_line(8).in_column(11)
+        expect(problems).to contain_warning(msg).on_line(8).in_column(19)
+        expect(problems).to contain_warning(msg).on_line(11).in_column(20)
+        expect(problems).to contain_warning(msg).on_line(14).in_column(11)
       end
     end
 
@@ -113,7 +138,7 @@ describe 'unquoted_string_in_case' do
       end
 
       it 'should create a warning' do
-        expect(problems).to contain_warning(msg).on_line(1).in_column(9)
+        expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
   end
@@ -153,6 +178,61 @@ describe 'unquoted_string_in_case' do
       end
     end
 
+    context 'quoted case containing :NAME' do
+      let(:code) do
+        <<-EOS
+        case $osfamily {
+          'Solaris': {
+            include ::foo
+          }
+          /(Darwin|FreeBSD)/: {
+            include bar
+          }
+          default: {
+            $rootgroup = 'root'
+          }
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+
+      it 'should not modify the manifest' do
+        expect(manifest).to eq(code)
+      end
+    end
+
+    context 'quoted case containing :CLASSREF' do
+      let(:code) do
+        <<-EOS
+        case $osfamily {
+          'Solaris': {
+            Foo {
+              bar => 'baz',
+            }
+          }
+          /(Darwin|FreeBSD)/: {
+            $rootgroup = 'wheel'
+            include bar
+          }
+          default: {
+            $rootgroup = 'root'
+          }
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+
+      it 'should not modify the manifest' do
+        expect(manifest).to eq(code)
+      end
+    end
+
     context ':NAME in case' do
       let(:code) do
         <<-EOS
@@ -175,7 +255,7 @@ describe 'unquoted_string_in_case' do
       end
 
       it 'should fix the problem' do
-        expect(problems).to contain_fixed(msg).on_line(1).in_column(9)
+        expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
       end
 
       it 'should quote the case statement' do
@@ -219,7 +299,7 @@ describe 'unquoted_string_in_case' do
       end
 
       it 'should fix the problem' do
-        expect(problems).to contain_fixed(msg).on_line(1).in_column(9)
+        expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
       end
 
       it 'should quote the case statement' do

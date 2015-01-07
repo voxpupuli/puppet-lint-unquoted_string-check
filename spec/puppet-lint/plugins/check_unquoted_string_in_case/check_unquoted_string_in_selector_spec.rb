@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'unquoted_string_in_selector' do
-  let(:msg) { 'expected quoted string in selector' }
+  let(:msg) { 'unquoted string in selector' }
 
   context 'with fix disabled' do
     context 'quoted case' do
