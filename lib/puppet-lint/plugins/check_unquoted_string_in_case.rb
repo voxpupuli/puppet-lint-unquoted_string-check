@@ -26,7 +26,7 @@ PuppetLint.new_check(:unquoted_string_in_case) do
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
-      if case_tokens.index { |r| r.type == :NAME || r.type == :CLASSREF }
+      if case_tokens.index { |r| r.next_token.type == :COLON && (r.type == :NAME || r.type == :CLASSREF) }
         notify :warning, {
           :message => 'expected quoted string in case',
           :line    => case_tokens.first.line,

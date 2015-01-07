@@ -26,6 +26,53 @@ describe 'unquoted_string_in_case' do
       end
     end
 
+    context 'quoted case containing :NAME' do
+      let(:code) do
+        <<-EOS
+        case $osfamily {
+          'Solaris': {
+            include ::foo
+          }
+          /(Darwin|FreeBSD)/: {
+            include bar
+          }
+          default: {
+            $rootgroup = 'root'
+          }
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
+
+    context 'quoted case containing :CLASSREF' do
+      let(:code) do
+        <<-EOS
+        case $osfamily {
+          'Solaris': {
+            Foo {
+              bar => 'baz',
+            }
+          }
+          /(Darwin|FreeBSD)/: {
+            $rootgroup = 'wheel'
+            include bar
+          }
+          default: {
+            $rootgroup = 'root'
+          }
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
+
     context ':NAME in case' do
       let(:code) do
         <<-EOS
