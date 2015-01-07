@@ -52,4 +52,98 @@ describe 'unquoted_string_in_selector' do
       end
     end
   end
+
+  context 'with fix enabled' do
+    before do
+      PuppetLint.configuration.fix = true
+    end
+
+    after do
+      PuppetLint.configuration.fix = false
+    end
+
+    context 'quoted case' do
+      let(:code) do
+        <<-EOS
+        $rootgroup = $osfamily ? {
+          'Solaris'          => 'wheel',
+          /(Darwin|FreeBSD)/ => 'wheel',
+          default            => 'root',
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+
+      it 'should not modify the manifest' do
+        expect(manifest).to eq(code)
+      end
+    end
+
+    context ':NAME in case' do
+      let(:code) do
+        <<-EOS
+        $rootgroup = $osfamily ? {
+          solaris            => 'wheel',
+          /(Darwin|FreeBSD)/ => 'wheel',
+          default            => 'root',
+        }
+        EOS
+      end
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should fix the problem' do
+        expect(problems).to contain_fixed(msg).on_line(1).in_column(32)
+      end
+
+      it 'should quote the case statement' do
+        expect(manifest).to eq(
+          <<-EOS
+        $rootgroup = $osfamily ? {
+          'solaris'            => 'wheel',
+          /(Darwin|FreeBSD)/ => 'wheel',
+          default            => 'root',
+        }
+          EOS
+        )
+      end
+    end
+
+    context ':CLASSREF in case' do
+      let(:code) do
+        <<-EOS
+        $rootgroup = $osfamily ? {
+          Solaris            => 'wheel',
+          /(Darwin|FreeBSD)/ => 'wheel',
+          default            => 'root',
+        }
+        EOS
+      end
+
+      it 'should only detect a single problem' do
+        expect(problems).to have(1).problem
+      end
+
+      it 'should fix the problem' do
+        expect(problems).to contain_fixed(msg).on_line(1).in_column(32)
+      end
+
+      it 'should quote the case statement' do
+        expect(manifest).to eq(
+          <<-EOS
+        $rootgroup = $osfamily ? {
+          'Solaris'            => 'wheel',
+          /(Darwin|FreeBSD)/ => 'wheel',
+          default            => 'root',
+        }
+          EOS
+        )
+      end
+    end
+  end
 end
