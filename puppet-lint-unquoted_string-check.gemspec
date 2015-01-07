@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-unquoted_string-check'
-  spec.version     = '0.2.0'
+  spec.version     = '0.2.1'
   spec.homepage    = 'https://github.com/mcanevet/puppet-lint-unquoted_string-check'
   spec.license     = 'Apache-2.0'
   spec.author      = 'Mickaël Canévet'
