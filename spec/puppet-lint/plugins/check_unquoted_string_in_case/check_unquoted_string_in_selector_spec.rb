@@ -32,7 +32,7 @@ describe 'unquoted_string_in_selector' do
       end
 
       it 'should create a warning' do
-        expect(problems).to contain_warning(msg).on_line(1).in_column(32)
+        expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
 
@@ -48,7 +48,7 @@ describe 'unquoted_string_in_selector' do
       end
 
       it 'should create a warning' do
-        expect(problems).to contain_warning(msg).on_line(1).in_column(32)
+        expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
   end
@@ -98,7 +98,7 @@ describe 'unquoted_string_in_selector' do
       end
 
       it 'should fix the problem' do
-        expect(problems).to contain_fixed(msg).on_line(1).in_column(32)
+        expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
       end
 
       it 'should quote the case statement' do
@@ -130,7 +130,7 @@ describe 'unquoted_string_in_selector' do
       end
 
       it 'should fix the problem' do
-        expect(problems).to contain_fixed(msg).on_line(1).in_column(32)
+        expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
       end
 
       it 'should quote the case statement' do

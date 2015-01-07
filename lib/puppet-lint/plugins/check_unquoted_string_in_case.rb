@@ -38,20 +38,20 @@ def tokens_to_fix(type_tokens, sep_type)
   tokens_to_fix
 end
 
-PuppetLint.new_check(:unquoted_string_in_case) do
+def act_on_tokens(type, sep_type, &block)
+  type_indexes(type).each do |kase|
+    case_tokens = tokens[kase[:start]..kase[:end]]
 
-  def act_on_tokens(&block)
-    type_indexes(:CASE).each do |kase|
-      case_tokens = tokens[kase[:start]..kase[:end]]
-
-      tokens_to_fix(case_tokens, :COLON).each do |r|
-        block.call(r)
-      end
+    tokens_to_fix(case_tokens, sep_type).each do |r|
+      block.call(r)
     end
   end
+end
+
+PuppetLint.new_check(:unquoted_string_in_case) do
 
   def check
-    act_on_tokens do |r|
+    act_on_tokens(:CASE, :COLON) do |r|
       notify :warning, {
         :message => 'unquoted string in case',
         :line    => r.line,
@@ -61,7 +61,7 @@ PuppetLint.new_check(:unquoted_string_in_case) do
   end 
 
   def fix(problem)
-    act_on_tokens do |r|
+    act_on_tokens(:CASE, :COLON) do |r|
       r.type = :SSTRING
     end
   end
@@ -69,43 +69,19 @@ end
 
 PuppetLint.new_check(:unquoted_string_in_selector) do
 
-  def tokens_to_fix(qmark_tokens)
-    tokens_to_fix = []
-    qmark_tokens.index do |r|
-      if r.type == :FARROW
-        s = r.prev_token
-        while s.type != :NEWLINE
-          if s.type == :NAME || s.type == :CLASSREF
-            tokens_to_fix << s
-          end
-          s = s.prev_token
-        end
-      end
-    end
-    tokens_to_fix
-  end
-
   def check
-    type_indexes(:QMARK).each do |kase|
-      qmark_tokens = tokens[kase[:start]..kase[:end]]
-
-      tokens_to_fix(qmark_tokens).each do |r|
-        notify :warning, {
-          :message => 'unquoted string in selector',
-          :line    => qmark_tokens.first.line,
-          :column  => qmark_tokens.first.column,
-        }
-      end
+    act_on_tokens(:QMARK, :FARROW) do |r|
+      notify :warning, {
+        :message => 'unquoted string in selector',
+        :line    => r.line,
+        :column  => r.column,
+      }
     end
   end 
 
   def fix(problem)
-    type_indexes(:QMARK).each do |kase|
-      qmark_tokens = tokens[kase[:start]..kase[:end]]
-
-      tokens_to_fix(qmark_tokens).each do |r|
-        r.type = :SSTRING
-      end
+    act_on_tokens(:QMARK, :FARROW) do |r|
+      r.type = :SSTRING
     end
   end
 end
