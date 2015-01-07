@@ -22,29 +22,29 @@ def type_indexes(type)
   type_indexes
 end
 
-PuppetLint.new_check(:unquoted_string_in_case) do
-
-  def tokens_to_fix(case_tokens)
-    tokens_to_fix = []
-    case_tokens.index do |r|
-      if r.type == :COLON
-        s = r.prev_token
-        while s.type != :NEWLINE
-          if s.type == :NAME || s.type == :CLASSREF
-            tokens_to_fix << s
-          end
-          s = s.prev_token
+def tokens_to_fix(type_tokens, sep_type)
+  tokens_to_fix = []
+  type_tokens.index do |r|
+    if r.type == sep_type
+      s = r.prev_token
+      while s.type != :NEWLINE
+        if s.type == :NAME || s.type == :CLASSREF
+          tokens_to_fix << s
         end
+        s = s.prev_token
       end
     end
-    tokens_to_fix
   end
+  tokens_to_fix
+end
+
+PuppetLint.new_check(:unquoted_string_in_case) do
 
   def act_on_tokens(&block)
     type_indexes(:CASE).each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
-      tokens_to_fix(case_tokens).each do |r|
+      tokens_to_fix(case_tokens, :COLON).each do |r|
         block.call(r)
       end
     end
