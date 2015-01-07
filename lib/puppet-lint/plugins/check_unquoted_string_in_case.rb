@@ -58,7 +58,9 @@ PuppetLint.new_check(:unquoted_string_in_case) do
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
-      case_tokens.index { |r| r.type = :SSTRING if r.type == :NAME || r.type == :CLASSREF }
+      tokens_to_fix(case_tokens).each do |r|
+        r.type = :SSTRING
+      end
     end
   end
 end

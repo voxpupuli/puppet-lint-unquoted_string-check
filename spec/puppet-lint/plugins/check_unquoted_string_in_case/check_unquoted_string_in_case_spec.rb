@@ -243,6 +243,18 @@ describe 'unquoted_string_in_case' do
           solaris: {
             $rootgroup = 'wheel'
           }
+          redhat,debian: {
+            include ::foo
+          }
+          redhat, debian: {
+            Foo { bar => 'baz' }
+          }
+          'redhat',debian: {
+            $rootgroup = wheel
+          }
+          redhat,'debian': {
+            $rootgroup = 'wheel'
+          }
           /(Darwin|FreeBSD)/: {
             $rootgroup = 'wheel'
           }
@@ -254,11 +266,17 @@ describe 'unquoted_string_in_case' do
       end
 
       it 'should only detect a single problem' do
-        expect(problems).to have(1).problem
+        expect(problems).to have(7).problem
       end
 
       it 'should fix the problem' do
         expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
+        expect(problems).to contain_fixed(msg).on_line(5).in_column(11)
+        expect(problems).to contain_fixed(msg).on_line(5).in_column(18)
+        expect(problems).to contain_fixed(msg).on_line(8).in_column(11)
+        expect(problems).to contain_fixed(msg).on_line(8).in_column(19)
+        expect(problems).to contain_fixed(msg).on_line(11).in_column(20)
+        expect(problems).to contain_fixed(msg).on_line(14).in_column(11)
       end
 
       it 'should quote the case statement' do
@@ -266,6 +284,18 @@ describe 'unquoted_string_in_case' do
           <<-EOS
         case $osfamily {
           'solaris': {
+            $rootgroup = 'wheel'
+          }
+          'redhat','debian': {
+            include ::foo
+          }
+          'redhat', 'debian': {
+            Foo { bar => 'baz' }
+          }
+          'redhat','debian': {
+            $rootgroup = wheel
+          }
+          'redhat','debian': {
             $rootgroup = 'wheel'
           }
           /(Darwin|FreeBSD)/: {
