@@ -2,9 +2,8 @@ require 'pp'
 
 PuppetLint.new_check(:unquoted_string_in_case) do
 
-  def check
+  def case_indexes
     case_indexes = []
-
     tokens.each_index do |token_idx|
       if tokens[token_idx].type == :CASE
         depth = 0
@@ -22,49 +21,40 @@ PuppetLint.new_check(:unquoted_string_in_case) do
         end
       end
     end
+    case_indexes
+  end
 
+  def tokens_to_fix(case_tokens)
+    tokens_to_fix = []
+    case_tokens.index do |r|
+      if r.type == :COLON
+        s = r.prev_token
+        while s.type != :NEWLINE
+          if s.type == :NAME || s.type == :CLASSREF
+            tokens_to_fix << s
+          end
+          s = s.prev_token
+        end
+      end
+    end
+    tokens_to_fix
+  end
+
+  def check
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
-      case_tokens.index do |r|
-        if r.type == :COLON
-          s = r.prev_token
-          while s.type != :NEWLINE
-            if s.type == :NAME || s.type == :CLASSREF
-              notify :warning, {
-                :message => 'unquoted string in case',
-                :line    => s.line,
-                :column  => s.column,
-              }
-            end
-            s = s.prev_token
-          end
-        end
+      tokens_to_fix(case_tokens).each do |r|
+        notify :warning, {
+          :message => 'unquoted string in case',
+          :line    => r.line,
+          :column  => r.column,
+        }
       end
     end
   end 
 
   def fix(problem)
-    case_indexes = []
-
-    tokens.each_index do |token_idx|
-      if tokens[token_idx].type == :CASE
-        depth = 0
-        tokens[(token_idx + 1)..-1].each_index do |case_token_idx|
-          idx = case_token_idx + token_idx + 1
-          if tokens[idx].type == :LBRACE
-            depth += 1
-          elsif tokens[idx].type == :RBRACE
-            depth -= 1
-            if depth == 0
-              case_indexes << {:start => token_idx, :end => idx}
-              break
-            end
-          end
-        end
-      end
-    end
-
     case_indexes.each do |kase|
       case_tokens = tokens[kase[:start]..kase[:end]]
 
