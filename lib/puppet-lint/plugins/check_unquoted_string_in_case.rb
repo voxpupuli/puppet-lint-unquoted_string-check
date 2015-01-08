@@ -22,43 +22,31 @@ def type_indexes(type)
   type_indexes
 end
 
-def tokens_to_fix(type_tokens, sep_type)
-  tokens_to_fix = []
-  type_tokens.index do |r|
-    if r.type == sep_type
-      s = r.prev_token
-      while s.type != :NEWLINE and s.type != :LBRACE
-        if s.type == :NAME || s.type == :CLASSREF
-          tokens_to_fix << s
-        end
-        s = s.prev_token
-      end
-    end
-  end
-  tokens_to_fix
-end
-
-def act_on_tokens(type, sep_type, &block)
+def notify_tokens(type, sep_type, message)
   type_indexes(type).each do |kase|
-    case_tokens = tokens[kase[:start]..kase[:end]]
-
-    tokens_to_fix(case_tokens, sep_type).each do |r|
-      block.call(r)
+    type_tokens = tokens[kase[:start]..kase[:end]]
+    type_tokens.index do |r|
+      if r.type == sep_type
+        s = r.prev_token
+        while s.type != :NEWLINE and s.type != :LBRACE
+          if s.type == :NAME || s.type == :CLASSREF
+            notify :warning, {
+              :message => message,
+              :line    => s.line,
+              :column  => s.column,
+              :token   => s,
+            }
+          end
+          s = s.prev_token
+        end
+      end
     end
   end
 end
 
 PuppetLint.new_check(:unquoted_string_in_case) do
-
   def check
-    act_on_tokens(:CASE, :COLON) do |r|
-      notify :warning, {
-        :message => 'unquoted string in case',
-        :line    => r.line,
-        :column  => r.column,
-        :token   => r,
-      }
-    end
+    notify_tokens(:CASE, :COLON, 'unquoted string in case')
   end 
 
   def fix(problem)
@@ -67,16 +55,8 @@ PuppetLint.new_check(:unquoted_string_in_case) do
 end
 
 PuppetLint.new_check(:unquoted_string_in_selector) do
-
   def check
-    act_on_tokens(:QMARK, :FARROW) do |r|
-      notify :warning, {
-        :message => 'unquoted string in selector',
-        :line    => r.line,
-        :column  => r.column,
-        :token   => r,
-      }
-    end
+    notify_tokens(:QMARK, :FARROW, 'unquoted string in selector')
   end 
 
   def fix(problem)
