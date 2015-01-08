@@ -56,14 +56,13 @@ PuppetLint.new_check(:unquoted_string_in_case) do
         :message => 'unquoted string in case',
         :line    => r.line,
         :column  => r.column,
+        :token   => r,
       }
     end
   end 
 
   def fix(problem)
-    act_on_tokens(:CASE, :COLON) do |r|
-      r.type = :SSTRING
-    end
+    problem[:token].type = :SSTRING
   end
 end
 
@@ -75,13 +74,12 @@ PuppetLint.new_check(:unquoted_string_in_selector) do
         :message => 'unquoted string in selector',
         :line    => r.line,
         :column  => r.column,
+        :token   => r,
       }
     end
   end 
 
   def fix(problem)
-    act_on_tokens(:QMARK, :FARROW) do |r|
-      r.type = :SSTRING
-    end
+    problem[:token].type = :SSTRING
   end
 end
