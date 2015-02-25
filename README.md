@@ -9,6 +9,19 @@ puppet-lint-unquoted_string-check
 
 A puppet-lint plugin to check that selectors and case statements cases are quoted.
 
+## Installing
+
+### From the command line
+
+```shell
+$ gem install puppet-lint-unquoted_string-check
+```
+
+### In a Gemfile
+
+```ruby
+gem 'puppet-lint-unquoted_string-check', :require => false
+```
 
 ## Checks
 
