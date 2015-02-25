@@ -1,9 +1,9 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-unquoted_string-check'
   spec.version     = '0.2.5'
-  spec.homepage    = 'https://github.com/camptocamp/puppet-lint-unquoted_string-check'
+  spec.homepage    = 'https://github.com/puppet-community/puppet-lint-unquoted_string-check'
   spec.license     = 'Apache-2.0'
-  spec.author      = 'Camptocamp'
+  spec.author      = 'Puppet Community'
   spec.email       = 'mickael.canevet@camptocamp.com'
   spec.files       = Dir[
     'README.md',
