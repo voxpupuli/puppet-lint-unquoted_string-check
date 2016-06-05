@@ -141,6 +141,23 @@ describe 'unquoted_string_in_case' do
         expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
+
+    context 'Puppet Types in case' do
+      let(:code) do
+        <<-EOS
+        case $value {
+          Integer: { notice('yes int')}
+          Array: { notice('yes array')}
+          'Debian': { notice('this is Sparta')}
+          default: { notice('something else')}
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
   end
 
   context 'with fix enabled' do
@@ -351,6 +368,27 @@ describe 'unquoted_string_in_case' do
         }
           EOS
         )
+      end
+    end
+
+    context 'Puppet Types in case' do
+      let(:code) do
+        <<-EOS
+        case $value {
+          Integer: { notice('yes int')}
+          Array: { notice('yes array')}
+          'Debian': { notice('this is Sparta')}
+          default: { notice('something else')}
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+
+      it 'should not modify the manifest' do
+        expect(manifest).to eq(code)
       end
     end
   end
