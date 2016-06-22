@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-unquoted_string-check'
-  spec.version     = '0.2.5'
+  spec.version     = '0.3.0'
   spec.homepage    = 'https://github.com/puppet-community/puppet-lint-unquoted_string-check'
   spec.license     = 'Apache-2.0'
   spec.author      = 'Puppet Community'
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
     A puppet-lint plugin to check that selectors and case statements cases are quoted.
   EOF
 
-  spec.add_dependency             'puppet-lint', '~> 1.0'
+  spec.add_dependency             'puppet-lint', '>= 1.0', '< 3.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
