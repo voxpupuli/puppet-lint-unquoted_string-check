@@ -145,5 +145,28 @@ describe 'unquoted_string_in_selector' do
         )
       end
     end
+
+    context 'hashes in case' do
+      let(:code) do
+        <<-EOS
+        $postfix_configuration = $configuration ? {
+          'relay'     => {
+            relayhost => '[example.com]:587',
+            satellite => true,
+          },
+          'smarthost' => {
+            smtp_listen       => 'all',
+            master_submission => 'submission inet n - - - - smtpd -o smtpd_tls_security_level=encrypt',
+            mta               => true,
+            relayhost         => 'direct',
+          },
+        }
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
   end
 end
