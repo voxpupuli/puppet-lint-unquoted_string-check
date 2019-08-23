@@ -5,7 +5,6 @@ puppet-lint-unquoted_string-check
 [![Gem Version](https://img.shields.io/gem/v/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
 [![Gem Downloads](https://img.shields.io/gem/dt/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
 [![Coverage Status](https://img.shields.io/coveralls/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://coveralls.io/r/voxpupuli/puppet-lint-unquoted_string-check?branch=master)
-[![Gemnasium](https://img.shields.io/gemnasium/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://gemnasium.com/voxpupuli/puppet-lint-unquoted_string-check)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 A puppet-lint plugin to check that selectors and case statements cases are quoted.
