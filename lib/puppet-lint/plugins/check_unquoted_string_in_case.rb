@@ -22,24 +22,20 @@ def type_indexes(type)
   type_indexes
 end
 
-def is_puppet_type(token)
-  token.type == :CLASSREF and [ 'Undef', 'Default', 'Integer', 'Float', 'Boolean', 'Regexp', 'String', 'Array', 'Hash', 'Resource', 'Class', 'Collection', 'Scalar', 'Numeric', 'CatalogEntry', 'Data', 'Tuple', 'Struct', 'Optional', 'NotUndef', 'Variant', 'Enum', 'Pattern', 'Any', 'Callable', 'Type', 'Runtime', ].include? token.value
-end
-
 def notify_tokens(type, sep_type, message)
   type_indexes(type).each do |kase|
     type_tokens = tokens[kase[:start]..kase[:end]]
     type_tokens.index do |r|
       if r.type == sep_type
         s = r.prev_token
-        while s.type != :NEWLINE and s.type != :LBRACE
-          if s.type == :NAME || s.type == :CLASSREF
+        while (s.type != :NEWLINE) && (s.type != :LBRACE)
+          if (s.type == :NAME || s.type == :CLASSREF) && (s.type != :TYPE)
             notify :warning, {
               :message => message,
               :line    => s.line,
               :column  => s.column,
               :token   => s,
-            } unless is_puppet_type(s)
+            }
           end
           s = s.prev_token
         end
