@@ -51,6 +51,22 @@ describe 'unquoted_string_in_selector' do
         expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
+
+    context ':TYPE in case' do
+      let(:code) do
+        <<-PUPPET
+          $listen_socket = $service_bind ? {
+            Undef                   => undef,
+            Stdlib::IP::Address::V6 => "[${service_bind}]:${service_port}",
+            default                 => "${service_bind}:${service_port}",
+          }
+        PUPPET
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
   end
 
   context 'with fix enabled' do
