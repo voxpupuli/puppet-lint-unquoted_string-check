@@ -54,7 +54,7 @@ end
 PuppetLint.new_check(:unquoted_string_in_case) do
   def check
     notify_tokens(:CASE, :COLON, 'unquoted string in case')
-  end 
+  end
 
   def fix(problem)
     problem[:token].type = :SSTRING
@@ -64,7 +64,7 @@ end
 PuppetLint.new_check(:unquoted_string_in_selector) do
   def check
     notify_tokens(:QMARK, :FARROW, 'unquoted string in selector')
-  end 
+  end
 
   def fix(problem)
     problem[:token].type = :SSTRING
