@@ -1,10 +1,10 @@
 puppet-lint-unquoted_string-check
 =================================
 
-[![Build Status](https://img.shields.io/travis/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://travis-ci.org/voxpupuli/puppet-lint-unquoted_string-check)
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/blob/master/LICENSE)
+[![Test](https://github.com/voxpupuli/puppet-lint-param-docs/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet-lint-param-docs/actions/workflows/test.yml)
 [![Gem Version](https://img.shields.io/gem/v/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
-[![Gem Downloads](https://img.shields.io/gem/dt/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
-[![Coverage Status](https://img.shields.io/coveralls/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://coveralls.io/r/voxpupuli/puppet-lint-unquoted_string-check?branch=master)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 A puppet-lint plugin to check that selectors and case statements cases are quoted.
@@ -109,3 +109,16 @@ The maintainer preferred that Puppet Community take ownership of the module for 
 Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Camptocamp.
 
 Previously: https://github.com/camptocamp/puppet-lint-unquoted_string-check
+
+## License
+
+This gem is licensed under the Apache-2 license.
+
+## Release information
+
+To make a new release, please do:
+* Update the version in the `puppet-lint-absolute_classname-check.gemspec` file
+* Install gems with `bundle install --with release --path .vendor`
+* generate the changelog with `bundle exec rake changelog`
+* Create a PR with it
+* After it got merged, push a tag. Travis will do the actual release

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/tree/2.1.0) (2021-06-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/compare/2.0.0...2.1.0)
+
+**Implemented enhancements:**
+
+- Allow gem on Ruby 3 [\#13](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/pull/13) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Convert to Github Actions [\#12](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/pull/12) ([ekohl](https://github.com/ekohl))
+
 ## [2.0.0](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/tree/2.0.0) (2020-03-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/compare/1.0.0...2.0.0)
