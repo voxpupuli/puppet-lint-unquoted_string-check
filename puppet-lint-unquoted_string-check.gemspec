@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
-  spec.add_development_dependency 'github_changelog_generator'
-  spec.add_development_dependency 'coveralls', '~> 0.7'
+  spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'rake'
 end
