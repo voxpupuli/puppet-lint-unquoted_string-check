@@ -2,8 +2,10 @@ puppet-lint-unquoted_string-check
 =================================
 
 [![License](https://img.shields.io/github/license/voxpupuli/puppet-lint-unquoted_string-check.svg)](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/blob/master/LICENSE)
-[![Test](https://github.com/voxpupuli/puppet-lint-param-docs/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet-lint-param-docs/actions/workflows/test.yml)
-[![Gem Version](https://img.shields.io/gem/v/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
+[![Test](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/actions/workflows/test.yml)
+[![Release](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/actions/workflows/release.ym
+l)
+[![RubyGem Version](https://img.shields.io/gem/v/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
 [![RubyGem Downloads](https://img.shields.io/gem/dt/puppet-lint-unquoted_string-check.svg)](https://rubygems.org/gems/puppet-lint-unquoted_string-check)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
@@ -117,8 +119,9 @@ This gem is licensed under the Apache-2 license.
 ## Release information
 
 To make a new release, please do:
-* Update the version in the `puppet-lint-absolute_classname-check.gemspec` file
+* update the version in the gemspec file
 * Install gems with `bundle install --with release --path .vendor`
 * generate the changelog with `bundle exec rake changelog`
+* Check if the new version matches the closed issues/PRs in the changelog
 * Create a PR with it
-* After it got merged, push a tag. Travis will do the actual release
+* After it got merged, push a tag. GitHub actions will do the actual release to rubygems and GitHub Packages
