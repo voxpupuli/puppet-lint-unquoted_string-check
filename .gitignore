@@ -3,4 +3,3 @@
 /Gemfile.lock
 vendor/bundle
 .vendor/
-coverage/
