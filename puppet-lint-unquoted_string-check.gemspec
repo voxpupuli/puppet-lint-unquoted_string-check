@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
     'LICENSE',
     'lib/**/*',
     'spec/**/*',
+    'CHANGELOG.md',
   ]
   spec.test_files  = Dir['spec/**/*']
   spec.summary     = 'A puppet-lint plugin to check that selectors and case statements cases are quoted.'
