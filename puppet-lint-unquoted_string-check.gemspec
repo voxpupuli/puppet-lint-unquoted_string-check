@@ -1,9 +1,6 @@
-$LOAD_PATH.push(File.expand_path('lib', __dir__))
-require 'puppet-lint-unquoted-string-check/version'
-
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-unquoted_string-check'
-  spec.version     = PuppetLintUnquotedStringCheck::VERSION.dup
+  spec.version     = '3.0.0'
   spec.homepage    = 'https://github.com/puppet-community/puppet-lint-unquoted_string-check'
   spec.license     = 'Apache-2.0'
   spec.author      = 'Vox Pupuli'
