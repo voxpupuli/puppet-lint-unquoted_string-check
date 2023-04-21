@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     A puppet-lint plugin to check that selectors and case statements cases are quoted.
   EOF
 
-  spec.required_ruby_version = '>= 2.4'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.add_dependency             'puppet-lint', '>= 2.1', '< 4'
   spec.add_development_dependency 'rspec', '~> 3.0'
