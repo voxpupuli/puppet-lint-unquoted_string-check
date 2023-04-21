@@ -1,4 +1,4 @@
-$LOAD_PATH.push(File.expand_path('../lib', __FILE__))
+$LOAD_PATH.push(File.expand_path('lib', __dir__))
 require 'puppet-lint-unquoted-string-check/version'
 
 Gem::Specification.new do |spec|
@@ -15,18 +15,12 @@ Gem::Specification.new do |spec|
     'spec/**/*',
     'CHANGELOG.md',
   ]
-  spec.test_files  = Dir['spec/**/*']
   spec.summary     = 'A puppet-lint plugin to check that selectors and case statements cases are quoted.'
   spec.description = <<-EOF
     A puppet-lint plugin to check that selectors and case statements cases are quoted.
   EOF
 
-  spec.required_ruby_version = '>= 2.4'
+  spec.required_ruby_version = '>= 2.7'
 
-  spec.add_dependency             'puppet-lint', '>= 2.1', '< 4'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-its', '~> 1.0'
-  spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'rake'
+  spec.add_dependency 'puppet-lint', '>= 3', '< 5'
 end
