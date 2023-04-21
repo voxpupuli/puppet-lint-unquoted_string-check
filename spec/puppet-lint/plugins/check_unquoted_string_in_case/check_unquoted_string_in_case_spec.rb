@@ -24,7 +24,7 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
     end
@@ -46,7 +46,7 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
     end
@@ -71,7 +71,7 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
     end
@@ -105,11 +105,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should create a warning' do
+      it 'creates a warning' do
         expect(problems).to have(7).problems
       end
 
-      it 'should create a warning' do
+      it 'creates a warning' do
         expect(problems).to contain_warning(msg).on_line(2).in_column(11)
         expect(problems).to contain_warning(msg).on_line(5).in_column(11)
         expect(problems).to contain_warning(msg).on_line(5).in_column(18)
@@ -137,7 +137,7 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should create a warning' do
+      it 'creates a warning' do
         expect(problems).to contain_warning(msg).on_line(2).in_column(11)
       end
     end
@@ -154,7 +154,7 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
     end
@@ -189,11 +189,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
 
-      it 'should not modify the manifest' do
+      it 'does not modify the manifest' do
         expect(manifest).to eq(code)
       end
     end
@@ -215,11 +215,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
 
-      it 'should not modify the manifest' do
+      it 'does not modify the manifest' do
         expect(manifest).to eq(code)
       end
     end
@@ -244,11 +244,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
 
-      it 'should not modify the manifest' do
+      it 'does not modify the manifest' do
         expect(manifest).to eq(code)
       end
     end
@@ -282,11 +282,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should only detect a single problem' do
+      it 'onlies detect a single problem' do
         expect(problems).to have(7).problem
       end
 
-      it 'should fix the problem' do
+      it 'fixes the problem' do
         expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
         expect(problems).to contain_fixed(msg).on_line(5).in_column(11)
         expect(problems).to contain_fixed(msg).on_line(5).in_column(18)
@@ -296,9 +296,9 @@ describe 'unquoted_string_in_case' do
         expect(problems).to contain_fixed(msg).on_line(14).in_column(11)
       end
 
-      it 'should quote the case statement' do
+      it 'quotes the case statement' do
         expect(manifest).to eq(
-          <<-EOS
+          <<-EOS,
         case $osfamily {
           'solaris': {
             $rootgroup = 'wheel'
@@ -344,17 +344,17 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should only detect a single problem' do
+      it 'onlies detect a single problem' do
         expect(problems).to have(1).problem
       end
 
-      it 'should fix the problem' do
+      it 'fixes the problem' do
         expect(problems).to contain_fixed(msg).on_line(2).in_column(11)
       end
 
-      it 'should quote the case statement' do
+      it 'quotes the case statement' do
         expect(manifest).to eq(
-          <<-EOS
+          <<-EOS,
         case $osfamily {
           'Solaris': {
             $rootgroup = 'wheel'
@@ -383,11 +383,11 @@ describe 'unquoted_string_in_case' do
         EOS
       end
 
-      it 'should not detect any problems' do
+      it 'does not detect any problems' do
         expect(problems).to have(0).problems
       end
 
-      it 'should not modify the manifest' do
+      it 'does not modify the manifest' do
         expect(manifest).to eq(code)
       end
     end
