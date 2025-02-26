@@ -58,6 +58,7 @@ describe 'unquoted_string_in_selector' do
           $listen_socket = $service_bind ? {
             Undef                   => undef,
             Stdlib::IP::Address::V6 => "[${service_bind}]:${service_port}",
+            SemVerRange('>1.0.0')   => 'xyz',
             default                 => "${service_bind}:${service_port}",
           }
         PUPPET
