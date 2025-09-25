@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/tree/4.1.0) (2025-09-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/compare/4.0.0...4.1.0)
+
+**Implemented enhancements:**
+
+- Add `SemVerRange` to `:TYPE in case` test [\#28](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/pull/28) ([kenyon](https://github.com/kenyon))
+
 ## [4.0.0](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/tree/4.0.0) (2025-09-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-lint-unquoted_string-check/compare/3.0.0...4.0.0)
